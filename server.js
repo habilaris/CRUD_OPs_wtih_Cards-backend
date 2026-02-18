@@ -1,9 +1,8 @@
 // Server should only start the server.
 const app = require("./src/app");
-const dotenv = require("dotenv");
+const env = require("./src/config/env");
 
-dotenv.config({ quiet: true });
-const PORT = process.env.PORT || 3001;
+const PORT = env.PORT;
 
 app.listen(PORT, () => {
   console.log(`Server Listening for requests at port: ${PORT}`);
