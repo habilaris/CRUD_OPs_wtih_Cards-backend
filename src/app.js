@@ -2,8 +2,9 @@ const dotenv = require("dotenv");
 const adminRouter = require("./routes/admin.routes");
 const express = require("express");
 
-
 const app = express();
+
+app.use(express.json());
 
 app.get("/", (req, res) => {
   res

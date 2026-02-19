@@ -12,9 +12,12 @@ router.get("/cards", (req, res) => {
 
 router.post("/create-card", (req, res) => {
   try {
-    userModel.create({ name: "Habil" });
+    const { name, age, gender } = req.body;
+
+    userModel.create({ name, age, gender });
     res.status(201).send("User Created");
     console.log("A new user is created.");
+    console.log(`{Name: ${name}, Age ${age}, Gender: ${gender}}`);
   } catch (err) {
     res.status(500).send("Could not create the user!");
     console.log("Error creating the user:", err);
