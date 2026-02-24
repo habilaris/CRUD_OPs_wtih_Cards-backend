@@ -1,4 +1,3 @@
-const dotenv = require("dotenv");
 const adminRouter = require("./routes/admin.routes");
 const express = require("express");
 const cors = require("cors");
