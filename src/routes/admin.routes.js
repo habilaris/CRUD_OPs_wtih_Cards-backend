@@ -13,17 +13,32 @@ router.get("/cards", async (req, res) => {
   res.status(200).send(users);
 });
 
-router.post("/create-card", (req, res) => {
+router.post("/create-card", async (req, res) => {
   try {
     const { name, age, gender } = req.body;
 
-    userModel.create({ name, age, gender });
+    const newUser = await userModel.create({ name, age, gender });
     res.status(201).send({ message: "User Created" });
-    console.log("A new user is created.");
-    console.log(`{Name: ${name}, Age: ${age}, Gender: ${gender}}`);
+    console.log("A new user is created.", newUser);
   } catch (err) {
     res.status(500).send({ message: "Could not create the user!" });
     console.log("Error creating the user:", err);
+  }
+});
+
+router.delete("/delete-card", async (req, res) => {
+  const { name, age } = req.body;
+  console.log("\nSomeone visited /delete-cards\n");
+  try {
+    await userModel.deleteOne({ name, age });
+    res.status(200).send({
+      message: `The card of the user ${name} of age ${age} has been deleted!`,
+    });
+  } catch (err) {
+    console.error("Something went wrong in deleting the user card.", err);
+    res
+      .status(404)
+      .send({ message: "Something went wrong in deleting the user card." });
   }
 });
 
