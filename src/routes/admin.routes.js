@@ -21,8 +21,29 @@ router.post("/create-card", async (req, res) => {
     res.status(201).send({ message: "User Created" });
     console.log("A new user is created.", newUser);
   } catch (err) {
-    res.status(500).send({ message: "Could not create the user!" });
+    res.status(400).send({ message: "Could not create the user!" });
     console.log("Error creating the user:", err);
+  }
+});
+
+router.put("/update-card", async (req, res) => {
+  try {
+    const { id, name, age, gender } = req.body;
+    const updatedUser = await userModel.findByIdAndUpdate(
+      id,
+      {
+        $set: { name, age, gender },
+        $inc: { updateCount: 1 },
+      },
+      {
+        runValidators: true /* Validated the Model */,
+        new: true /* Returns the new document instead of the old one*/,
+      },
+    );
+    res.status(200).send({ message: "User has been updated", updatedUser });
+  } catch (err) {
+    res.status(400).send({ message: "Could not update the user!" });
+    console.log("Error updating the user:", err);
   }
 });
 

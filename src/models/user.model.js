@@ -4,6 +4,7 @@ const userSchema = new mongoose.Schema({
   name: String,
   age: Number,
   gender: String,
+  updateCount: { type: Number, default: 0 },
 });
 
 const userModel = mongoose.model("users", userSchema);
